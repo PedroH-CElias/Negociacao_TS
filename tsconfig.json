@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "outDir": "dist/js", // para onde deve ir os arquivos compilados
+        "target": "ES6", // linguagem js que deve ser compilada
+    },
+    "include": [
+        "app/**/*" // onde estao os arquivos ts que deve ser compilado
+    ]
+}
