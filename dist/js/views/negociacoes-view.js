@@ -1,7 +1,5 @@
-export class NegociacoesView {
-    constructor(seletor) {
-        this.elemento = document.querySelector(seletor); // armazenarr o elemento adquirido no template a partir do controller
-    }
+import { View } from "./view.js";
+export class NegociacoesView extends View {
     template(model) {
         // uso de ` ` para declarar uma template string, ajuda na quebra de linhas
         // tr eh linha, th eh coluna, thead eh o cabecalho da tabela
@@ -28,10 +26,5 @@ export class NegociacoesView {
             </tbody>
         </table>
         `;
-    }
-    update(model) {
-        const template = this.template(model);
-        console.log(template);
-        this.elemento.innerHTML = template; // transforma elemento html (string) em DOM
     }
 }

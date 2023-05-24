@@ -1,13 +1,7 @@
 import { Negociacoes } from "../models/negociacoes.js"
+import { View } from "./view.js"
 
-export class NegociacoesView {
-
-    private elemento: HTMLElement
-
-    constructor(seletor: string) { // seletor css como parametro
-        this.elemento = document.querySelector(seletor) // armazenarr o elemento adquirido no template a partir do controller
-
-    }
+export class NegociacoesView extends View<Negociacoes> { // definir tipo de parametros para os metodos 
 
     template(model: Negociacoes): string {
         // uso de ` ` para declarar uma template string, ajuda na quebra de linhas
@@ -37,9 +31,4 @@ export class NegociacoesView {
         `
     }
 
-    update(model: Negociacoes): void {
-        const template = this.template(model)
-        console.log(template)
-        this.elemento.innerHTML = template  // transforma elemento html (string) em DOM
-    }
 }
