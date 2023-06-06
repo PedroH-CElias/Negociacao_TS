@@ -1,9 +1,9 @@
 export class Negociacoes {
     constructor() {
-        this.negociacoes = []; // declaracao de uma lista de negociacao = (Array<Negociacao>)
+        this.negociacoes = [];
     }
     adiciona(negociacao) {
-        this.negociacoes.push(negociacao); // push adiciona um item na lista
+        this.negociacoes.push(negociacao);
     }
     lista() {
         return this.negociacoes;

@@ -1,16 +1,21 @@
 export class Negociacao {
-    // _ eh costume da linguagem em dizer que o atributo eh private
-    constructor(// quando o construtor recebe atributos, pode-se delcarar eles diretamente aqui
-    _data, quantidade, valor) {
+    constructor(_data, quantidade, valor) {
         this._data = _data;
         this.quantidade = quantidade;
         this.valor = valor;
     }
     get data() {
-        const data = new Date(this._data.getTime()); // clone da data armazenada, para defender de alteracoes
+        const data = new Date(this._data.getTime());
         return data;
     }
     get volume() {
         return this.quantidade * this.valor;
+    }
+    static criaDe(dataString, quantidadeString, valorString) {
+        const exp = /-/g;
+        const date = new Date(dataString.replace(exp, ','));
+        const quantidade = parseInt(quantidadeString);
+        const valor = parseFloat(valorString);
+        return new Negociacao(date, quantidade, valor);
     }
 }

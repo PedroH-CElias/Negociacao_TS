@@ -1,3 +1,4 @@
+import { DiasDaSemana } from "../enums/diasDaSemana.js"
 import { Negociacao } from "../models/negociacao.js"
 import { Negociacoes } from "../models/negociacoes.js"
 import { MensagemView } from "../views/mensagem-view.js"
@@ -9,37 +10,41 @@ export class NegociacaoController {
     private inputQuantidade: HTMLInputElement
     private inputValor: HTMLInputElement
     private negociacoes = new Negociacoes()
-    private negociacoesView = new NegociacoesView("#negociacoesView")
+    private negociacoesView = new NegociacoesView("#negociacoesView", true)
     private mensagemView = new MensagemView("#mensagemView")
 
     constructor (){
-        this.inputData = document.querySelector('#data')
-        this.inputQuantidade = document.querySelector('#quantidade')
-        this.inputValor = document.querySelector('#valor')
-        this.negociacoesView.update(this.negociacoes)
+        this.inputData = document.querySelector('#data') as HTMLInputElement // pegando o item com id data do index.html e jogando no input // casting para dizer que o valor ano eh nulo
+        this.inputQuantidade = document.querySelector('#quantidade') as HTMLInputElement // pegando o item com id quantidade do index.html e jogando no input
+        this.inputValor = document.querySelector('#valor') as HTMLInputElement // pegando o item com id valor do index.html e jogando no input
+        this.negociacoesView.update(this.negociacoes) // lancando as negociacoes no metodo update
     }
 
-    adiciona(): void {
-        const negociacao = this.criaNegociacao()
+    public adiciona(): void {
+        const negociacao = Negociacao.criaDe(this.inputData.value, this.inputQuantidade.value, this.inputValor.value) // posso fazer iso devido ao metodo ser static
+        if(!this.ehDiaUtil(negociacao.data)){ 
+          this.mensagemView.update("Apenas negociações em dias úteis são aceitas")
+          return
+        }
         this.negociacoes.adiciona(negociacao) // adicionando  negociacao na lista de negociacoes
-        this.negociacoesView.update(this.negociacoes)
-        this.mensagemView.update("Negociação incluida com sucessso!")
         this.limparFormulario()
-        
+        this.atualizaView()  
     }
 
-    criaNegociacao(): Negociacao { // declarar tipo do metodo (especifico do TS)
-        const exp = /-/g //criando uma expressao regular, pegar todos os hifens, por isso o g no final
-        const date = new Date(this.inputData.value.replace(exp, ',')) // pega a data do input e substitui todos os - por ,
-        const quantidade = parseInt(this.inputQuantidade.value)
-        const valor = parseFloat(this.inputValor.value)
-        return new Negociacao(date, quantidade, valor)
+    private ehDiaUtil(data: Date) {
+        return data.getDay() > DiasDaSemana.DOMINGO && data.getDay() < DiasDaSemana.SABADO // getDay pega o dia da semana de 0 a 6, sendo 0 domingo e 6 sabado, e assim por diante
     }
 
-    limparFormulario(): void{
+
+    private limparFormulario(): void{
         this.inputData.value = ''
         this.inputQuantidade.value = ''
         this.inputValor.value = ''
         this.inputData.focus() // colocar a sugestao = dd/mm/yyyy
+    }
+
+    private atualizaView() : void{
+        this.negociacoesView.update(this.negociacoes)
+        this.mensagemView.update("Negociação incluida com sucessso!")
     }
 }

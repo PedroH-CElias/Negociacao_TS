@@ -1,8 +1,6 @@
 import { View } from "./view.js";
 export class NegociacoesView extends View {
     template(model) {
-        // uso de ` ` para declarar uma template string, ajuda na quebra de linhas
-        // tr eh linha, th eh coluna, thead eh o cabecalho da tabela
         return `
         <table class= "table table-hover table-bordered">
             <thead>
@@ -16,8 +14,7 @@ export class NegociacoesView extends View {
                 ${model.lista().map(negociacao => {
             return `
                         <tr> 
-                            <td>${new Intl.DateTimeFormat().format(negociacao.data) // formatacao da data
-            }</td> 
+                            <td>${this.formatar(negociacao.data)}</td> 
                             <td>${negociacao.quantidade}</td>
                             <td>${negociacao.valor}</td>
                         </tr>             
@@ -26,5 +23,8 @@ export class NegociacoesView extends View {
             </tbody>
         </table>
         `;
+    }
+    formatar(data) {
+        return new Intl.DateTimeFormat().format(data);
     }
 }

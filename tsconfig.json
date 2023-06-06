@@ -3,7 +3,10 @@
         "outDir": "dist/js", // para onde deve ir os arquivos compilados
         "target": "ES6", // linguagem js que deve ser compilada
         "noEmitOnError": true, // nao gera arquivo js enquanto ts tiver com erro na compilacao
-        "noImplicitAny": true // nao gera atributos com tipo any
+        "noImplicitAny": true, // nao gera atributos com tipo any
+        "removeComments":true, // remove os comentarios ao gerar o js no dist
+        "strictNullChecks": true // faz com que o codigo nao aceite possiveis valores nulos, obriga o dev a tratar
+
     },
     "include": [
         "app/**/*" // onde estao os arquivos ts que deve ser compilado

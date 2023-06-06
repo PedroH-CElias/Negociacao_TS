@@ -1,9 +1,16 @@
 export class View {
-    constructor(seletor) {
-        this.elemento = document.querySelector(seletor); // armazenar o elemento adquirido no template a partir do controller
+    constructor(seletor, escapar) {
+        this.escapar = false;
+        this.elemento = document.querySelector(seletor);
+        if (escapar) {
+            this.escapar = escapar;
+        }
     }
     update(model) {
-        const template = this.template(model);
-        this.elemento.innerHTML = template; // transforma elemento html (string) em DOM
+        let template = this.template(model);
+        if (this.escapar) {
+            template = template.replace(/<script>[\s\S]*?<\/script>/, '');
+        }
+        this.elemento.innerHTML = template;
     }
 }
