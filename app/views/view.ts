@@ -4,7 +4,12 @@ export abstract class View <Tipo> { // nao pode ser instanciada // tipo generico
     private escapar = false
 
     constructor(seletor: string, escapar?: boolean){ // seletor css como parametro // ? torna o parametro opcional, sempre declarar por  ultimo
-        this.elemento = document.querySelector(seletor)  // armazenar o elemento adquirido no template a partir do controller
+        const elemento = document.querySelector(seletor) // armazenar o elemento adquirido no template a partir do controller
+        if(elemento){
+            this.elemento = elemento as HTMLInputElement
+        }else{
+            throw Error(`Seletor ${seletor} nao existe no DOM `)
+        }
         if(escapar){
             this.escapar = escapar
         }
